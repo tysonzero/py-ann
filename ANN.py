@@ -1,6 +1,10 @@
+from random import random
+
+
 class Neuron:
     def __init__(self, parents=[]):
         self.parents = parents
+        self.weights = [random() for parent in parents]
 
 
 class NeuronNetwork:
