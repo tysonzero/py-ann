@@ -1,5 +1,6 @@
 class Neuron:
-    pass
+    def __init__(self, parents=[]):
+        self.parents = parents
 
 
 class NeuronNetwork:
@@ -10,4 +11,7 @@ class NeuronNetwork:
         for row in xrange(rows):
             self.neurons.append([])
             for column in xrange(columns):
-                self.neurons[row].append(Neuron())
+                if row == 0:
+                    self.neurons[row].append(Neuron(parents=[]))
+                else:
+                    self.neurons[row].append(Neuron(parents=self.neurons[row - 1]))
