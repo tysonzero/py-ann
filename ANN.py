@@ -2,14 +2,14 @@ from random import random
 
 
 class Neuron:
+    output = None
+
     def __init__(self, parents=[]):
         self.parents = parents
         self.weights = [random() for parent in parents]
 
-    def get_output(self):
-        return sum([parent.output * self.weights[i] for i, parent in enumerate(self.parents)]) >= 1
-
-    output = property(get_output)
+    def calculate(self):
+        self.output = sum([parent.output * self.weights[i] for i, parent in enumerate(self.parents)]) >= 1
 
 
 class NeuronNetwork:
