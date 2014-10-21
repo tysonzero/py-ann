@@ -6,6 +6,11 @@ class Neuron:
         self.parents = parents
         self.weights = [random() for parent in parents]
 
+    def get_output(self):
+        return sum([parent.output * self.weights[i] for i, parent in enumerate(self.parents)]) >= 1
+
+    output = property(get_output)
+
 
 class NeuronNetwork:
     neurons = []
