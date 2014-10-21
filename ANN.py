@@ -20,7 +20,7 @@ class NeuronNetwork:
         for row in xrange(rows + 2):
             self.neurons.append([])
             if row == 0:
-                for input in xrange(inputs):
+                for input_ in xrange(inputs):
                     self.neurons[row].append(Neuron(parents=[]))
             elif row == rows + 1:
                 for output in xrange(outputs):
