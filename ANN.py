@@ -28,3 +28,12 @@ class NeuronNetwork:
             else:
                 for column in xrange(columns):
                     self.neurons[row].append(Neuron(parents=self.neurons[row - 1]))
+
+    def run(self, inputs):
+        for i, neuron_row in enumerate(self.neurons):
+            for j, neuron in enumerate(neuron_row):
+                if i == 0:
+                    neuron.output = inputs[j]
+                else:
+                    neuron.calculate()
+        return [neuron.output for neuron in self.neurons[len(self.neurons) - 1]]
