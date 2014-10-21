@@ -27,4 +27,4 @@ class NeuronNetwork:
                     self.neurons[row].append(Neuron(parents=self.neurons[row - 1]))
             else:
                 for column in xrange(columns):
-                        self.neurons[row].append(Neuron(parents=self.neurons[row - 1]))
+                    self.neurons[row].append(Neuron(parents=self.neurons[row - 1]))
