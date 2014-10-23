@@ -2,8 +2,6 @@ from random import random
 
 
 class Neuron:
-    output = None
-
     def __init__(self, parents=[]):
         self.parents = parents
         self.weights = [random() for parent in parents]
@@ -13,8 +11,6 @@ class Neuron:
 
 
 class NeuronNetwork:
-    neurons = []
-
     def __init__(self, inputs, outputs, rows, columns):
         self.neurons = []
         for row in xrange(rows + 2):
