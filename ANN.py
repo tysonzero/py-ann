@@ -7,8 +7,8 @@ class Neuron:
         self.weights = [uniform(-1, 1) for parent in self.parents]
         self.gradient = [uniform(-1, 1) for parent in self.parents]
 
-    def calculate(self):
-        self.output = sum([parent.output * self.weights[i] for i, parent in enumerate(self.parents)]) > 0
+    def calculate(self, increment=0):
+        self.output = sum([parent.output * (self.weights[i] + increment*self.gradient[i]) for i, parent in enumerate(self.parents)]) > 0
 
 
 class NeuronNetwork:
