@@ -34,3 +34,9 @@ class NeuronNetwork:
                 else:
                     neuron.calculate(increment=increment)
         return [neuron.output for neuron in self.neurons[len(self.neurons) - 1]]
+
+    def mutate(self, increment):
+        for neuron_row in self.neurons:
+            for neuron in neuron_row:
+                neuron.weights = [weight + increment*neuron.gradient[i] for i, weight in enumerate(neuron.weights)]
+                neuron.gradient = [uniform(-1, 1) for parent in neuron.parents]
