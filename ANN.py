@@ -12,18 +12,18 @@ class Neuron:
 
 
 class NeuronNetwork:
-    def __init__(self, inputs, outputs, rows, columns):
+    def __init__(self, inputs, outputs, hidden, rows):
         self.neurons = []
-        for row in xrange(rows + 2):
+        for row in xrange(rows):
             self.neurons.append([])
             if row == 0:
                 for input_ in xrange(inputs):
                     self.neurons[row].append(Neuron(parents=[]))
-            elif row == rows + 1:
+            elif row == rows - 1:
                 for output in xrange(outputs):
                     self.neurons[row].append(Neuron(parents=self.neurons[row - 1]))
             else:
-                for column in xrange(columns):
+                for column in xrange(hidden):
                     self.neurons[row].append(Neuron(parents=self.neurons[row - 1]))
 
     def run(self, inputs, increment=0):
