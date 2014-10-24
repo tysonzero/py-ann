@@ -1,13 +1,13 @@
-from random import random
+from random import uniform
 
 
 class Neuron:
     def __init__(self, parents=[]):
         self.parents = parents
-        self.weights = [random() for parent in parents]
+        self.weights = [uniform(-1, 1) for parent in parents]
 
     def calculate(self):
-        self.output = sum([parent.output * self.weights[i] for i, parent in enumerate(self.parents)]) >= 1
+        self.output = sum([parent.output * self.weights[i] for i, parent in enumerate(self.parents)]) > 0
 
 
 class NeuronNetwork:
