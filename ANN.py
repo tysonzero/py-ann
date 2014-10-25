@@ -10,6 +10,10 @@ class Neuron:
     def calculate(self, increment=0):
         self.output = sum([parent.output * (self.weights[i] + increment*self.gradient[i]) for i, parent in enumerate(self.parents)]) > 0
 
+    def mutate(self, increment):
+        self.weights = [weight + increment*self.gradient[i] for i, weight in enumerate(self.weights)]
+        self.gradient = [uniform(-1, 1) for parent in self.parents]
+
 
 class NeuronNetwork:
     def __init__(self, inputs, outputs, hidden, rows):
@@ -38,5 +42,4 @@ class NeuronNetwork:
     def mutate(self, increment):
         for neuron_row in self.neurons:
             for neuron in neuron_row:
-                neuron.weights = [weight + increment*neuron.gradient[i] for i, weight in enumerate(neuron.weights)]
-                neuron.gradient = [uniform(-1, 1) for parent in neuron.parents]
+                neuron.mutate(increment=increment)
