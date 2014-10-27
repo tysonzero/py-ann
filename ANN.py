@@ -5,14 +5,14 @@ class Neuron:
     def __init__(self, parents=[]):
         self.parents = parents
         self.weights = [uniform(-1, 1) for parent in self.parents]
-        self.gradient = [uniform(-1, 1) for parent in self.parents]
+        self.slopes = [uniform(-1, 1) for parent in self.parents]
 
     def calculate(self, increment=0):
-        self.output = sum([parent.output * (self.weights[i] + increment*self.gradient[i]) for i, parent in enumerate(self.parents)]) > 0
+        self.output = sum([parent.output * (self.weights[i] + increment*self.slopes[i]) for i, parent in enumerate(self.parents)]) > 0
 
     def mutate(self, increment):
-        self.weights = [weight + increment*self.gradient[i] for i, weight in enumerate(self.weights)]
-        self.gradient = [uniform(-1, 1) for parent in self.parents]
+        self.weights = [weight + increment*self.slopes[i] for i, weight in enumerate(self.weights)]
+        self.slopes = [uniform(-1, 1) for parent in self.parents]
 
 
 class NeuronNetwork:
