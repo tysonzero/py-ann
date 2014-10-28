@@ -3,16 +3,19 @@ from random import uniform
 
 class Neuron:
     def __init__(self, parents=[]):
-        self.parents = parents
-        self.weights = [uniform(-1, 1) for parent in self.parents]
-        self.slopes = [uniform(-1, 1) for weight in self.weights]
+        self.parents = [{
+            'neuron': parent,
+            'weight': uniform(-1, 1),
+            'slope': uniform(-1, 1),
+        } for parent in parents]
 
     def calculate(self, increment=0):
-        self.output = sum([parent.output * (self.weights[i] + increment*self.slopes[i]) for i, parent in enumerate(self.parents)]) > 0
+        self.output = sum([parent['neuron'].output * (parent['weight'] + increment*parent['slope']) for parent in self.parents]) > 0
 
     def mutate(self, increment):
-        self.weights = [weight + increment*self.slopes[i] for i, weight in enumerate(self.weights)]
-        self.slopes = [uniform(-1, 1) for weight in self.weights]
+        for parent in self.parents:
+            parent['weight'] += increment*parent['slope']
+            parent['slope'] = uniform(-1, 1)
 
 
 class NeuronNetwork:
