@@ -30,7 +30,7 @@ class NeuronNetwork:
                 for column in xrange(hidden):
                     self.neurons[row].append(Neuron(parents=self.neurons[row - 1]))
 
-    def run(self, inputs, increment=0):
+    def calculate(self, inputs, increment=0):
         for i, neuron_row in enumerate(self.neurons):
             for j, neuron in enumerate(neuron_row):
                 if i == 0:
