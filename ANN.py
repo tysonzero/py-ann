@@ -42,7 +42,7 @@ class NeuronNetwork:
                     neuron.output = inputs[j]
                 else:
                     neuron.calculate(increment=increment)
-        return [neuron.output for neuron in self.neurons[len(self.neurons) - 1]]
+        return [neuron.output for neuron in self.neurons[-1]]
 
     def mutate(self, increment):
         for neuron_row in self.neurons:
