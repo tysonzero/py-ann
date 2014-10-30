@@ -10,11 +10,11 @@ class Neuron:
         } for parent in parents]
 
     def calculate(self, increment=0):
-        self.output = sum([parent['neuron'].output * (parent['weight'] + increment*parent['slope']) for parent in self.parents]) > 0
+        self.output = sum([parent['neuron'].output * (parent['weight'] + increment * parent['slope']) for parent in self.parents]) > 0
 
     def mutate(self, increment):
         for parent in self.parents:
-            parent['weight'] += increment*parent['slope']
+            parent['weight'] += increment * parent['slope']
             parent['slope'] = uniform(-1, 1)
 
 
