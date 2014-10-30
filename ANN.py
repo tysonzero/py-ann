@@ -20,6 +20,7 @@ class Neuron:
 
 class NeuronNetwork:
     def __init__(self, inputs, outputs, hidden, rows):
+        self.bias = Neuron()
         self.neurons = []
         for row in xrange(rows):
             self.neurons.append([])
@@ -28,10 +29,11 @@ class NeuronNetwork:
                     self.neurons[row].append(Neuron(parents=[]))
             elif row == rows - 1:
                 for output in xrange(outputs):
-                    self.neurons[row].append(Neuron(parents=self.neurons[row - 1]))
+                    self.neurons[row].append(Neuron(parents=self.neurons[row - 1] + [self.bias]))
             else:
                 for column in xrange(hidden):
-                    self.neurons[row].append(Neuron(parents=self.neurons[row - 1]))
+                    self.neurons[row].append(Neuron(parents=self.neurons[row - 1] + [self.bias]))
+        self.bias.output = True
 
     def calculate(self, inputs, increment=0):
         for i, neuron_row in enumerate(self.neurons):
