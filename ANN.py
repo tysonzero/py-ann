@@ -18,7 +18,7 @@ class Neuron:
             parent['slope'] = uniform(-1, 1)
 
 
-class NeuronNetwork:
+class NeuralNetwork:
     def __init__(self, inputs, outputs, hidden, rows):
         self.bias = Neuron()
         self.neurons = []
