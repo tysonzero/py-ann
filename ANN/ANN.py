@@ -25,14 +25,11 @@ class NeuralNetwork:
         for row in xrange(rows):
             self.neurons.append([])
             if row == 0:
-                for input_ in xrange(inputs):
-                    self.neurons[row].append(Neuron(parents=[]))
+                self.neurons[row] = [Neuron(parents=[]) for input_ in xrange(inputs)]
             elif row == rows - 1:
-                for output in xrange(outputs):
-                    self.neurons[row].append(Neuron(parents=self.neurons[row - 1] + [self.bias]))
+                self.neurons[row] = [Neuron(parents=self.neurons[row - 1] + [self.bias]) for output in xrange(outputs)]
             else:
-                for column in xrange(hidden):
-                    self.neurons[row].append(Neuron(parents=self.neurons[row - 1] + [self.bias]))
+                self.neurons[row] = [Neuron(parents=self.neurons[row - 1] + [self.bias]) for column in xrange(hidden)]
         self.bias.output = True
 
     def calculate(self, inputs, increment=0):
