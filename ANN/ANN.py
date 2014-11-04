@@ -53,3 +53,16 @@ class NeuralNetwork(object):
         for neuron_row in self.neurons:
             for neuron in neuron_row:
                 neuron.mutate(increment=increment)
+
+    def get_genome(self):
+        genome = []
+        for neuron_row in self.neurons[1:]:
+            genome.append([neuron.genome for neuron in neuron_row])
+        return genome
+
+    def set_genome(self, value):
+        for i, neuron_row in enumerate(self.neurons[1:]):
+            for j, neuron in enumerate(neuron_row):
+                neuron.genome = value[i][j]
+
+    genome = property(get_genome, set_genome)
