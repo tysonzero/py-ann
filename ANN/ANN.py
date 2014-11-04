@@ -17,6 +17,15 @@ class Neuron(object):
             parent['weight'] += increment * parent['slope']
             parent['slope'] = uniform(-1, 1)
 
+    def get_genome(self):
+        return [parent['weight'] for parent in self.parents]
+
+    def set_genome(self, value):
+        for i, parent in enumerate(self.parents):
+            parent['weight'] = value[i]
+
+    genome = property(get_genome, set_genome)
+
 
 class NeuralNetwork(object):
     def __init__(self, inputs, outputs, hidden, rows):
