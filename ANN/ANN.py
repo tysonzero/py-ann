@@ -1,7 +1,7 @@
 from random import uniform
 
 
-class Neuron:
+class Neuron(object):
     def __init__(self, parents=[]):
         self.parents = [{
             'neuron': parent,
@@ -18,7 +18,7 @@ class Neuron:
             parent['slope'] = uniform(-1, 1)
 
 
-class NeuralNetwork:
+class NeuralNetwork(object):
     def __init__(self, inputs, outputs, hidden, rows):
         self.bias = Neuron()
         self.neurons = []
