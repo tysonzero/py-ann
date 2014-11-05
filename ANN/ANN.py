@@ -30,14 +30,10 @@ class Neuron(object):
 class NeuralNetwork(object):
     def __init__(self, inputs, outputs, hidden, rows):
         self.bias = Neuron()
-        self.neurons = []
-        for row in xrange(rows):
-            if row == 0:
-                self.neurons.append([Neuron(parents=[]) for input_ in xrange(inputs)])
-            elif row == rows - 1:
-                self.neurons.append([Neuron(parents=self.neurons[row - 1] + [self.bias]) for output in xrange(outputs)])
-            else:
-                self.neurons.append([Neuron(parents=self.neurons[row - 1] + [self.bias]) for column in xrange(hidden)])
+        self.neurons = [[Neuron(parents=[]) for input_ in xrange(inputs)]]
+        for row in xrange(rows - 2):
+            self.neurons.append([Neuron(parents=self.neurons[-1] + [self.bias]) for output in xrange(outputs)])
+        self.neurons.append([Neuron(parents=self.neurons[-1] + [self.bias]) for output in xrange(outputs)])
         self.bias.output = True
 
     def calculate(self, inputs, increment=0):
