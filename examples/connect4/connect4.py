@@ -13,12 +13,13 @@ class Connect4(object):
     def __str__(self):
         output = ''
         for i in xrange(6):
-            output += i and '\n ' or ' '
+            output += i and '\n|' or '|'
             for piece_column in self.pieces:
                 try:
-                    output += str(piece_column[5 - i]) + ' '
+                    output += piece_column[5 - i] and 'X|' or 'O|'
                 except IndexError:
-                    output += '  '
+                    output += ' |'
+        output += '\n 0 1 2 3 4 5 6 '
         return output
 
 
