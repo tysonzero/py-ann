@@ -3,8 +3,8 @@ class Connect4(object):
         self.pieces = [[] for i in xrange(7)]
         self.turn = 1
 
-    def move(self, row):
-        self.pieces[row % 7].append(self.turn)
+    def move(self, column):
+        self.pieces[column % 7].append(self.turn)
         self.turn = 3 - self.turn
 
     def __str__(self):
