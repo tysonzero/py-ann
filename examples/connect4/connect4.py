@@ -1,11 +1,11 @@
 class Connect4(object):
     def __init__(self):
         self.pieces = [[] for i in xrange(7)]
-        self.turn = 1
+        self.turn = 0
 
     def move(self, column):
         self.pieces[column % 7].append(self.turn)
-        self.turn = 3 - self.turn
+        self.turn = 1 - self.turn
 
     def __str__(self):
         output = ''
