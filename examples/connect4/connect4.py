@@ -4,8 +4,11 @@ class Connect4(object):
         self.turn = 0
 
     def move(self, column):
-        self.pieces[column % 7].append(self.turn)
-        self.turn = 1 - self.turn
+        for i in xrange(column, column + 7):
+            if len(self.pieces[i % 7]) < 6:
+                self.pieces[i % 7].append(self.turn)
+                self.turn = 1 - self.turn
+                return
 
     def __str__(self):
         output = ''
