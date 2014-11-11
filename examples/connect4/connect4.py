@@ -3,12 +3,28 @@ class Connect4(object):
         self.pieces = [[] for i in xrange(7)]
         self.turn = 0
 
+    def check(self, column):
+        vectors = ((1, 0), (1, 1), (0, 1), (-1, 1))
+        for i in xrange(4):
+            row = []
+            for j in xrange(-3, 4):
+                try:
+                    if column + j*vectors[i][0] >= 0 and len(self.pieces[column]) - 1 + j*vectors[i][1] >= 0:
+                        row.append(self.pieces[column + j*vectors[i][0]][len(self.pieces[column]) - 1 + j*vectors[i][1]])
+                    else:
+                        row.append(None)
+                except IndexError:
+                    row.append(None)
+            for j in xrange(4):
+                if row[j] == row[j + 1] == row[j + 2] == row[j + 3] is not None:
+                    return row[j]
+
     def move(self, column):
         for i in xrange(column, column + 7):
             if len(self.pieces[i % 7]) < 6:
                 self.pieces[i % 7].append(self.turn)
                 self.turn = 1 - self.turn
-                return
+                return self.check(column)
 
     def __str__(self):
         output = ''
