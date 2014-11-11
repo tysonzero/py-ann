@@ -24,4 +24,7 @@ class Connect4(object):
 
 
 def start():
-    pass
+    connect4 = Connect4()
+    while True:
+        print connect4
+        connect4.move(column=input('{0}\'s turn: '.format(connect4.turn and 'X' or 'O')))
