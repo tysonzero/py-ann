@@ -43,4 +43,8 @@ def start():
     connect4 = Connect4()
     while True:
         print connect4
-        connect4.move(column=input('{0}\'s turn: '.format(connect4.turn and 'X' or 'O')))
+        winner = connect4.move(column=input('{0}\'s turn: '.format(connect4.turn and 'X' or 'O')))
+        if winner is not None:
+            print connect4
+            print "{0} wins!".format(winner and 'X' or 'O')
+            break
