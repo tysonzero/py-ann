@@ -18,6 +18,8 @@ class Connect4(object):
             for j in xrange(4):
                 if row[j] == row[j + 1] == row[j + 2] == row[j + 3] is not None:
                     return row[j]
+        if sum(len(piece_column) for piece_column in self.pieces) == 42:
+            return 2
 
     def move(self, column):
         for i in xrange(column, column + 7):
@@ -46,5 +48,8 @@ def start():
         winner = connect4.move(column=input('{0}\'s turn: '.format(connect4.turn and 'X' or 'O')))
         if winner is not None:
             print connect4
-            print "{0} wins!".format(winner and 'X' or 'O')
+            if winner == 2:
+                print "It's a tie!"
+            else:
+                print "{0} wins!".format(winner and 'X' or 'O')
             break
