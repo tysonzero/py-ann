@@ -26,7 +26,7 @@ class Connect4(object):
             if len(self.pieces[i % 7]) < 6:
                 self.pieces[i % 7].append(self.turn)
                 self.turn = 1 - self.turn
-                return self.check(column)
+                return self.check(i)
 
     def __str__(self):
         output = ''
