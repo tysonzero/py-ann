@@ -51,10 +51,7 @@ class NeuralNetwork(object):
                 neuron.mutate(increment=increment)
 
     def get_genome(self):
-        genome = []
-        for neuron_row in self.neurons[1:]:
-            genome.append([neuron.genome for neuron in neuron_row])
-        return genome
+        return [[neuron.genome for neuron in neuron_row] for neuron_row in self.neurons[1:]]
 
     def set_genome(self, value):
         for i, neuron_row in enumerate(self.neurons[1:]):
