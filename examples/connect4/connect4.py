@@ -42,14 +42,16 @@ class Connect4(object):
 
 
 def start():
-    connect4 = Connect4()
-    while True:
-        print connect4
-        winner = connect4.move(column=input('{0}\'s turn: '.format(connect4.turn and 'X' or 'O')))
-        if winner is not None:
+    players = input('Players: ')
+    if players == 2:
+        connect4 = Connect4()
+        while True:
             print connect4
-            if winner == 2:
-                print "It's a tie!"
-            else:
-                print "{0} wins!".format(winner and 'X' or 'O')
-            break
+            winner = connect4.move(column=input('{0}\'s turn: '.format(connect4.turn and 'X' or 'O')))
+            if winner is not None:
+                print connect4
+                if winner == 2:
+                    print "It's a tie!"
+                else:
+                    print "{0} wins!".format(winner and 'X' or 'O')
+                break
