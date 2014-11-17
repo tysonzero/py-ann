@@ -28,6 +28,12 @@ class Connect4(object):
                 self.turn = 1 - self.turn
                 return self.check(i)
 
+    def input(self, inputs):
+        return self.move(sum(j*2**i for i, j in enumerate(inputs)))
+
+    def output(self):
+        return [piece for piece_column in self.pieces for piece in piece_column + [1] + [0] * (6 - len(piece_column))]
+
     def __str__(self):
         output = ''
         for i in xrange(6):
