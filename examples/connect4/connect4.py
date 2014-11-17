@@ -26,7 +26,7 @@ class Connect4(object):
             if len(self.pieces[i % 7]) < 6:
                 self.pieces[i % 7].append(self.turn)
                 self.turn = 1 - self.turn
-                return self.check(i)
+                return self.check(i % 7)
 
     def input(self, inputs):
         return self.move(sum(j*2**i for i, j in enumerate(inputs)))
