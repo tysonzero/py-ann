@@ -54,7 +54,7 @@ def start():
     players = input('Players: ')
     if players == 1:
         connect4 = Connect4()
-        ANN = NeuralNetwork(inputs=49, outputs=3, hidden=49, rows=2)
+        ANN = NeuralNetwork(inputs=49, outputs=3, hidden=49, rows=5)
         while True:
             print connect4
             if connect4.turn == 0:
