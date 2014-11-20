@@ -87,28 +87,26 @@ def start():
     if players == 1:
         connect4 = Connect4()
         ANN = NeuralNetwork(inputs=49, outputs=3, hidden=49, rows=5)
-        while True:
+        winner = None
+        while winner is None:
             print connect4
             if connect4.turn == 0:
                 winner = connect4.move(column=input('{0}\'s turn: '.format(connect4.turn and 'X' or 'O')))
             else:
                 winner = connect4.input(inputs=ANN.calculate(inputs=connect4.output()))
-            if winner is not None:
-                print connect4
-                if winner == 2:
-                    print "It's a tie!"
-                else:
-                    print "{0} wins!".format(winner and 'X' or 'O')
-                break
+        print connect4
+        if winner == 2:
+            print "It's a tie!"
+        else:
+            print "{0} wins!".format(winner and 'X' or 'O')
     if players == 2:
         connect4 = Connect4()
-        while True:
+        winner = None
+        while winner is None:
             print connect4
             winner = connect4.move(column=input('{0}\'s turn: '.format(connect4.turn and 'X' or 'O')))
-            if winner is not None:
-                print connect4
-                if winner == 2:
-                    print "It's a tie!"
-                else:
-                    print "{0} wins!".format(winner and 'X' or 'O')
-                break
+        print connect4
+        if winner == 2:
+            print "It's a tie!"
+        else:
+            print "{0} wins!".format(winner and 'X' or 'O')
