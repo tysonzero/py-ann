@@ -52,6 +52,38 @@ class Connect4(object):
 
 def start():
     players = input('Players: ')
+    if players == 0:
+        ANNs = [NeuralNetwork(49, 3, 49, 2) for i in xrange(20)]
+        for ANN0 in ANNs[0:10]:
+            for ANN1 in ANNs[10:20]:
+                connect4 = Connect4()
+                while True:
+                    if connect4.turn == 0:
+                        winner = connect4.input(inputs=ANN0.calculate(inputs=connect4.output()))
+                    else:
+                        winner = connect4.input(inputs=ANN1.calculate(inputs=connect4.output()))
+                    if winner is not None:
+                        print connect4
+                        if winner == 2:
+                            print "It's a tie!"
+                        else:
+                            print "{0} wins!".format(winner and 'X' or 'O')
+                        break
+        for ANN1 in ANNs[10:20]:
+            for ANN0 in ANNs[0:10]:
+                connect4 = Connect4()
+                while True:
+                    if connect4.turn == 0:
+                        winner = connect4.input(inputs=ANN0.calculate(inputs=connect4.output()))
+                    else:
+                        winner = connect4.input(inputs=ANN1.calculate(inputs=connect4.output()))
+                    if winner is not None:
+                        print connect4
+                        if winner == 2:
+                            print "It's a tie!"
+                        else:
+                            print "{0} wins!".format(winner and 'X' or 'O')
+                        break
     if players == 1:
         connect4 = Connect4()
         ANN = NeuralNetwork(inputs=49, outputs=3, hidden=49, rows=5)
