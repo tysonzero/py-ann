@@ -55,33 +55,35 @@ def start():
     if players == 0:
         ANNs = [NeuralNetwork(49, 3, 49, 2) for i in xrange(20)]
         for ANN0 in ANNs[0:10]:
-            for ANN1 in ANNs[10:20]:
-                connect4 = Connect4()
-                winner = None
-                while winner is None:
-                    if connect4.turn == 0:
-                        winner = connect4.input(inputs=ANN0.calculate(inputs=connect4.output()))
+            for i in xrange(100):
+                for ANN1 in ANNs[10:20]:
+                    connect4 = Connect4()
+                    winner = None
+                    while winner is None:
+                        if connect4.turn == 0:
+                            winner = connect4.input(inputs=ANN0.calculate(inputs=connect4.output(), increment=i))
+                        else:
+                            winner = connect4.input(inputs=ANN1.calculate(inputs=connect4.output()))
+                    print connect4
+                    if winner == 2:
+                        print "It's a tie!"
                     else:
-                        winner = connect4.input(inputs=ANN1.calculate(inputs=connect4.output()))
-                print connect4
-                if winner == 2:
-                    print "It's a tie!"
-                else:
-                    print "{0} wins!".format(winner and 'X' or 'O')
+                        print "{0} wins!".format(winner and 'X' or 'O')
         for ANN1 in ANNs[10:20]:
-            for ANN0 in ANNs[0:10]:
-                connect4 = Connect4()
-                winner = None
-                while winner is None:
-                    if connect4.turn == 0:
-                        winner = connect4.input(inputs=ANN0.calculate(inputs=connect4.output()))
+            for i in xrange(100):
+                for ANN0 in ANNs[0:10]:
+                    connect4 = Connect4()
+                    winner = None
+                    while winner is None:
+                        if connect4.turn == 0:
+                            winner = connect4.input(inputs=ANN0.calculate(inputs=connect4.output(), increment=i))
+                        else:
+                            winner = connect4.input(inputs=ANN1.calculate(inputs=connect4.output()))
+                    print connect4
+                    if winner == 2:
+                        print "It's a tie!"
                     else:
-                        winner = connect4.input(inputs=ANN1.calculate(inputs=connect4.output()))
-                print connect4
-                if winner == 2:
-                    print "It's a tie!"
-                else:
-                    print "{0} wins!".format(winner and 'X' or 'O')
+                        print "{0} wins!".format(winner and 'X' or 'O')
     if players == 1:
         connect4 = Connect4()
         ANN = NeuralNetwork(inputs=49, outputs=3, hidden=49, rows=5)
