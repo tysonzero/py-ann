@@ -76,9 +76,9 @@ def start():
                     winner = None
                     while winner is None:
                         if connect4.turn == 0:
-                            winner = connect4.input(inputs=ANN0.calculate(inputs=connect4.output(), increment=i))
+                            winner = connect4.input(inputs=ANN0.calculate(inputs=connect4.output()))
                         else:
-                            winner = connect4.input(inputs=ANN1.calculate(inputs=connect4.output()))
+                            winner = connect4.input(inputs=ANN1.calculate(inputs=connect4.output(), increment=i))
                     print connect4
                     if winner == 2:
                         print "It's a tie!"
