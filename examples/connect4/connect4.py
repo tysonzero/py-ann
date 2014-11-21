@@ -55,7 +55,9 @@ def start():
     if players == 0:
         ANNs = [NeuralNetwork(49, 3, 49, 2) for i in xrange(20)]
         for ANN0 in ANNs[0:10]:
+            score = []
             for i in xrange(100):
+                score.append(0)
                 for ANN1 in ANNs[10:20]:
                     connect4 = Connect4()
                     winner = None
@@ -68,9 +70,12 @@ def start():
                     if winner == 2:
                         print "It's a tie!"
                     else:
+                        score[-1] += 1 - 2*winner
                         print "{0} wins!".format(winner and 'X' or 'O')
         for ANN1 in ANNs[10:20]:
+            score = []
             for i in xrange(100):
+                score.append(0)
                 for ANN0 in ANNs[0:10]:
                     connect4 = Connect4()
                     winner = None
@@ -83,6 +88,7 @@ def start():
                     if winner == 2:
                         print "It's a tie!"
                     else:
+                        score[-1] += 2*winner - 1
                         print "{0} wins!".format(winner and 'X' or 'O')
     if players == 1:
         connect4 = Connect4()
