@@ -72,6 +72,10 @@ def start():
                     else:
                         scores[-1] += 1 - 2*winner
                         print "{0} wins!".format(winner and 'X' or 'O')
+            for i, score in enumerate(scores):
+                if score == max(scores):
+                    ANN0.mutate(increment=i/100.0)
+                    break
         for ANN1 in ANNs[10:20]:
             scores = []
             for i in xrange(100):
@@ -90,6 +94,10 @@ def start():
                     else:
                         scores[-1] += 2*winner - 1
                         print "{0} wins!".format(winner and 'X' or 'O')
+            for i, score in enumerate(scores):
+                if score == max(scores):
+                    ANN1.mutate(increment=i/100.0)
+                    break
     if players == 1:
         connect4 = Connect4()
         ANN = NeuralNetwork(inputs=49, outputs=3, hidden=49, rows=5)
