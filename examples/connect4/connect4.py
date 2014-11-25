@@ -61,7 +61,7 @@ def start():
         pass
     players = input('Players: ')
     if players == 0:
-        ANNs = [NeuralNetwork(49, 3, 49, 2) for i in xrange(20)]
+        ANNs = [NeuralNetwork(inputs=49, outputs=3, hidden=49, rows=2) for i in xrange(20)]
         for i, ANN in enumerate(ANNs):
             try:
                 ANN.genome = load(open('examples/connect4/genomes/genome{0:02d}.csv'.format(i), 'rb'))
