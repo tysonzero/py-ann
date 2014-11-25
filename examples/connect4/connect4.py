@@ -1,4 +1,5 @@
 from os import mkdir
+from pickle import dump
 
 
 from ANN.ANN import NeuralNetwork
@@ -61,16 +62,16 @@ def start():
     players = input('Players: ')
     if players == 0:
         ANNs = [NeuralNetwork(49, 3, 49, 2) for i in xrange(20)]
-        for ANN0 in ANNs[0:10]:
+        for i, ANN0 in enumerate(ANNs[0:10]):
             scores = []
-            for i in xrange(100):
+            for j in xrange(100):
                 scores.append(0)
                 for ANN1 in ANNs[10:20]:
                     connect4 = Connect4()
                     winner = None
                     while winner is None:
                         if connect4.turn == 0:
-                            winner = connect4.input(inputs=ANN0.calculate(inputs=connect4.output(), increment=i/100.0))
+                            winner = connect4.input(inputs=ANN0.calculate(inputs=connect4.output(), increment=j/100.0))
                         else:
                             winner = connect4.input(inputs=ANN1.calculate(inputs=connect4.output()))
                     print connect4
@@ -80,9 +81,10 @@ def start():
                         scores[-1] += 1 - 2*winner
                         print "{0} wins!".format(winner and 'X' or 'O')
             ANN0.mutate(increment=scores.index(max(scores))/100.0)
-        for ANN1 in ANNs[10:20]:
+            dump(ANN0.genome, open('examples/connect4/genomes/genome{0:02d}.csv'.format(i), 'wb'))
+        for i, ANN1 in enumerate(ANNs[10:20]):
             scores = []
-            for i in xrange(100):
+            for j in xrange(100):
                 scores.append(0)
                 for ANN0 in ANNs[0:10]:
                     connect4 = Connect4()
@@ -91,7 +93,7 @@ def start():
                         if connect4.turn == 0:
                             winner = connect4.input(inputs=ANN0.calculate(inputs=connect4.output()))
                         else:
-                            winner = connect4.input(inputs=ANN1.calculate(inputs=connect4.output(), increment=i/100.0))
+                            winner = connect4.input(inputs=ANN1.calculate(inputs=connect4.output(), increment=j/100.0))
                     print connect4
                     if winner == 2:
                         print "It's a tie!"
@@ -99,6 +101,7 @@ def start():
                         scores[-1] += 2*winner - 1
                         print "{0} wins!".format(winner and 'X' or 'O')
             ANN1.mutate(increment=scores.index(max(scores))/100.0)
+            dump(ANN1.genome, open('examples/connect4/genomes/genome{0:02d}.csv'.format(i + 10), 'wb'))
     if players == 1:
         connect4 = Connect4()
         ANN = NeuralNetwork(inputs=49, outputs=3, hidden=49, rows=5)
