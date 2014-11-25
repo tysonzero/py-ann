@@ -1,3 +1,6 @@
+from os import mkdir
+
+
 from ANN.ANN import NeuralNetwork
 
 
@@ -51,6 +54,10 @@ class Connect4(object):
 
 
 def start():
+    try:
+        mkdir('examples/connect4/genomes')
+    except OSError:
+        pass
     players = input('Players: ')
     if players == 0:
         ANNs = [NeuralNetwork(49, 3, 49, 2) for i in xrange(20)]
