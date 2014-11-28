@@ -1,5 +1,6 @@
 from os import mkdir
 from pickle import dump, load
+from random import randint
 
 
 from ANN.ANN import NeuralNetwork
@@ -108,20 +109,39 @@ def start():
             ANN1.mutate(increment=scores.index(max(scores))/100.0)
             dump(ANN1.genome, open('examples/connect4/genomes/genome{0:02d}.csv'.format(i + 10), 'wb'))
     if players == 1:
+        roll = randint(0, 19)
         connect4 = Connect4()
         ANN = NeuralNetwork(inputs=49, outputs=3, hidden=49, rows=5)
-        winner = None
-        while winner is None:
+        try:
+            ANN.genome = load(open('examples/connect4/genomes/genome{0:02d}.csv'.format(roll), 'rb'))
+        except IOError:
+            pass
+        if roll >= 10:
+            winner = None
+            while winner is None:
+                print connect4
+                if connect4.turn == 0:
+                    winner = connect4.move(column=input('{0}\'s turn: '.format(connect4.turn and 'X' or 'O')))
+                else:
+                    winner = connect4.input(inputs=ANN.calculate(inputs=connect4.output()))
             print connect4
-            if connect4.turn == 0:
-                winner = connect4.move(column=input('{0}\'s turn: '.format(connect4.turn and 'X' or 'O')))
+            if winner == 2:
+                print "It's a tie!"
             else:
-                winner = connect4.input(inputs=ANN.calculate(inputs=connect4.output()))
-        print connect4
-        if winner == 2:
-            print "It's a tie!"
+                print "{0} wins!".format(winner and 'X' or 'O')
         else:
-            print "{0} wins!".format(winner and 'X' or 'O')
+            winner = None
+            while winner is None:
+                print connect4
+                if connect4.turn == 0:
+                    winner = connect4.input(inputs=ANN.calculate(inputs=connect4.output()))
+                else:
+                    winner = connect4.move(column=input('{0}\'s turn: '.format(connect4.turn and 'X' or 'O')))
+            print connect4
+            if winner == 2:
+                print "It's a tie!"
+            else:
+                print "{0} wins!".format(winner and 'X' or 'O')
     if players == 2:
         connect4 = Connect4()
         winner = None
