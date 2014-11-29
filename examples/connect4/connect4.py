@@ -68,46 +68,47 @@ def start():
                 ANN.genome = load(open('examples/connect4/genomes/genome{0:02d}.csv'.format(i), 'rb'))
             except IOError:
                 pass
-        for i, ANN0 in enumerate(ANNs[0:10]):
-            scores = []
-            for j in xrange(100):
-                scores.append(0)
-                for ANN1 in ANNs[10:20]:
-                    connect4 = Connect4()
-                    winner = None
-                    while winner is None:
-                        if connect4.turn == 0:
-                            winner = connect4.input(inputs=ANN0.calculate(inputs=connect4.output(), increment=j/100.0))
+        for _ in xrange(input('Iterations: ')):
+            for i, ANN0 in enumerate(ANNs[0:10]):
+                scores = []
+                for j in xrange(100):
+                    scores.append(0)
+                    for ANN1 in ANNs[10:20]:
+                        connect4 = Connect4()
+                        winner = None
+                        while winner is None:
+                            if connect4.turn == 0:
+                                winner = connect4.input(inputs=ANN0.calculate(inputs=connect4.output(), increment=j/100.0))
+                            else:
+                                winner = connect4.input(inputs=ANN1.calculate(inputs=connect4.output()))
+                        print connect4
+                        if winner == 2:
+                            print "It's a tie!"
                         else:
-                            winner = connect4.input(inputs=ANN1.calculate(inputs=connect4.output()))
-                    print connect4
-                    if winner == 2:
-                        print "It's a tie!"
-                    else:
-                        scores[-1] += 1 - 2*winner
-                        print "{0} wins!".format(winner and 'X' or 'O')
-            ANN0.mutate(increment=scores.index(max(scores))/100.0)
-            dump(ANN0.genome, open('examples/connect4/genomes/genome{0:02d}.csv'.format(i), 'wb'))
-        for i, ANN1 in enumerate(ANNs[10:20]):
-            scores = []
-            for j in xrange(100):
-                scores.append(0)
-                for ANN0 in ANNs[0:10]:
-                    connect4 = Connect4()
-                    winner = None
-                    while winner is None:
-                        if connect4.turn == 0:
-                            winner = connect4.input(inputs=ANN0.calculate(inputs=connect4.output()))
+                            scores[-1] += 1 - 2*winner
+                            print "{0} wins!".format(winner and 'X' or 'O')
+                ANN0.mutate(increment=scores.index(max(scores))/100.0)
+                dump(ANN0.genome, open('examples/connect4/genomes/genome{0:02d}.csv'.format(i), 'wb'))
+            for i, ANN1 in enumerate(ANNs[10:20]):
+                scores = []
+                for j in xrange(100):
+                    scores.append(0)
+                    for ANN0 in ANNs[0:10]:
+                        connect4 = Connect4()
+                        winner = None
+                        while winner is None:
+                            if connect4.turn == 0:
+                                winner = connect4.input(inputs=ANN0.calculate(inputs=connect4.output()))
+                            else:
+                                winner = connect4.input(inputs=ANN1.calculate(inputs=connect4.output(), increment=j/100.0))
+                        print connect4
+                        if winner == 2:
+                            print "It's a tie!"
                         else:
-                            winner = connect4.input(inputs=ANN1.calculate(inputs=connect4.output(), increment=j/100.0))
-                    print connect4
-                    if winner == 2:
-                        print "It's a tie!"
-                    else:
-                        scores[-1] += 2*winner - 1
-                        print "{0} wins!".format(winner and 'X' or 'O')
-            ANN1.mutate(increment=scores.index(max(scores))/100.0)
-            dump(ANN1.genome, open('examples/connect4/genomes/genome{0:02d}.csv'.format(i + 10), 'wb'))
+                            scores[-1] += 2*winner - 1
+                            print "{0} wins!".format(winner and 'X' or 'O')
+                ANN1.mutate(increment=scores.index(max(scores))/100.0)
+                dump(ANN1.genome, open('examples/connect4/genomes/genome{0:02d}.csv'.format(i + 10), 'wb'))
     if players == 1:
         roll = randint(0, 19)
         connect4 = Connect4()
