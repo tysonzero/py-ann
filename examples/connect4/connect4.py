@@ -65,7 +65,7 @@ def start():
         ANNs = [NeuralNetwork(inputs=49, outputs=3, hidden=49, rows=5) for i in xrange(20)]
         for i, ANN in enumerate(ANNs):
             try:
-                ANN.genome = load(open('examples/connect4/genomes/genome{0:02d}.csv'.format(i), 'rb'))
+                ANN.genome = load(open('examples/connect4/genomes/genome{0:02d}.p'.format(i), 'rb'))
             except IOError:
                 pass
         for _ in xrange(input('Iterations: ')):
@@ -88,7 +88,7 @@ def start():
                             scores[-1] += 1 - 2*winner
                             print "{0} wins!".format(winner and 'X' or 'O')
                 ANN0.mutate(increment=scores.index(max(scores))/100.0)
-                dump(ANN0.genome, open('examples/connect4/genomes/genome{0:02d}.csv'.format(i), 'wb'))
+                dump(ANN0.genome, open('examples/connect4/genomes/genome{0:02d}.p'.format(i), 'wb'))
             for i, ANN1 in enumerate(ANNs[10:20]):
                 scores = []
                 for j in xrange(100):
@@ -108,13 +108,13 @@ def start():
                             scores[-1] += 2*winner - 1
                             print "{0} wins!".format(winner and 'X' or 'O')
                 ANN1.mutate(increment=scores.index(max(scores))/100.0)
-                dump(ANN1.genome, open('examples/connect4/genomes/genome{0:02d}.csv'.format(i + 10), 'wb'))
+                dump(ANN1.genome, open('examples/connect4/genomes/genome{0:02d}.p'.format(i + 10), 'wb'))
     if players == 1:
         roll = randint(0, 19)
         connect4 = Connect4()
         ANN = NeuralNetwork(inputs=49, outputs=3, hidden=49, rows=5)
         try:
-            ANN.genome = load(open('examples/connect4/genomes/genome{0:02d}.csv'.format(roll), 'rb'))
+            ANN.genome = load(open('examples/connect4/genomes/genome{0:02d}.p'.format(roll), 'rb'))
         except IOError:
             pass
         if roll >= 10:
