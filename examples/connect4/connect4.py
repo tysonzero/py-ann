@@ -40,7 +40,7 @@ class Connect4(object):
         return self.move(sum(j*2**i for i, j in enumerate(inputs)))
 
     def output(self):
-        return [piece for piece_column in self.pieces for piece in piece_column + [1] + [0] * (6 - len(piece_column))]
+        return [piece for piece_column in self.pieces for piece in piece_column + [1] + (6 - len(piece_column))*[0]]
 
     def __str__(self):
         output = ''
