@@ -62,6 +62,7 @@ def start():
         pass
     players = input('Players: ')
     if players == 0:
+        output = input('Output: ')
         ANNs = [NeuralNetwork(inputs=49, outputs=3, hidden=49, rows=5) for i in xrange(20)]
         for i, ANN in enumerate(ANNs):
             try:
@@ -81,12 +82,15 @@ def start():
                                 winner = connect4.input(inputs=ANN0.calculate(inputs=connect4.output(), increment=j/100.0))
                             else:
                                 winner = connect4.input(inputs=ANN1.calculate(inputs=connect4.output()))
-                        print connect4
+                        if output:
+                            print connect4
                         if winner == 2:
-                            print "It's a tie!"
+                            if output:
+                                print "It's a tie!"
                         else:
                             scores[-1] += 1 - 2*winner
-                            print "{0} wins!".format(winner and 'X' or 'O')
+                            if output:
+                                print "{0} wins!".format(winner and 'X' or 'O')
                 ANN0.mutate(increment=scores.index(max(scores))/100.0)
                 dump(ANN0.genome, open('examples/connect4/genomes/genome{0:02d}.p'.format(i), 'wb'))
             for i, ANN1 in enumerate(ANNs[10:20]):
@@ -101,12 +105,15 @@ def start():
                                 winner = connect4.input(inputs=ANN0.calculate(inputs=connect4.output()))
                             else:
                                 winner = connect4.input(inputs=ANN1.calculate(inputs=connect4.output(), increment=j/100.0))
-                        print connect4
+                        if output:
+                            print connect4
                         if winner == 2:
-                            print "It's a tie!"
+                            if output:
+                                print "It's a tie!"
                         else:
                             scores[-1] += 2*winner - 1
-                            print "{0} wins!".format(winner and 'X' or 'O')
+                            if output:
+                                print "{0} wins!".format(winner and 'X' or 'O')
                 ANN1.mutate(increment=scores.index(max(scores))/100.0)
                 dump(ANN1.genome, open('examples/connect4/genomes/genome{0:02d}.p'.format(i + 10), 'wb'))
     if players == 1:
