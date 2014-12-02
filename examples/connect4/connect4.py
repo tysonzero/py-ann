@@ -78,10 +78,10 @@ def start():
                         connect4 = Connect4()
                         winner = None
                         while winner is None:
-                            if connect4.turn == 0:
-                                winner = connect4.input(inputs=ANN0.calculate(inputs=connect4.output(), increment=j/100.0))
-                            else:
+                            if connect4.turn:
                                 winner = connect4.input(inputs=ANN1.calculate(inputs=connect4.output()))
+                            else:
+                                winner = connect4.input(inputs=ANN0.calculate(inputs=connect4.output(), increment=j/100.0))
                         if output:
                             print connect4
                         if winner == 2:
@@ -101,10 +101,10 @@ def start():
                         connect4 = Connect4()
                         winner = None
                         while winner is None:
-                            if connect4.turn == 0:
-                                winner = connect4.input(inputs=ANN0.calculate(inputs=connect4.output()))
-                            else:
+                            if connect4.turn:
                                 winner = connect4.input(inputs=ANN1.calculate(inputs=connect4.output(), increment=j/100.0))
+                            else:
+                                winner = connect4.input(inputs=ANN0.calculate(inputs=connect4.output()))
                         if output:
                             print connect4
                         if winner == 2:
@@ -128,10 +128,10 @@ def start():
             winner = None
             while winner is None:
                 print connect4
-                if connect4.turn == 0:
-                    winner = connect4.move(column=input('{0}\'s turn: '.format(connect4.turn and 'X' or 'O')))
-                else:
+                if connect4.turn:
                     winner = connect4.input(inputs=ANN.calculate(inputs=connect4.output()))
+                else:
+                    winner = connect4.move(column=input('{0}\'s turn: '.format(connect4.turn and 'X' or 'O')))
             print connect4
             if winner == 2:
                 print "It's a tie!"
@@ -141,10 +141,10 @@ def start():
             winner = None
             while winner is None:
                 print connect4
-                if connect4.turn == 0:
-                    winner = connect4.input(inputs=ANN.calculate(inputs=connect4.output()))
-                else:
+                if connect4.turn:
                     winner = connect4.move(column=input('{0}\'s turn: '.format(connect4.turn and 'X' or 'O')))
+                else:
+                    winner = connect4.input(inputs=ANN.calculate(inputs=connect4.output()))
             print connect4
             if winner == 2:
                 print "It's a tie!"
