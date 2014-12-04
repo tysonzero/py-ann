@@ -119,9 +119,9 @@ def start():
             ann.genome = load(open('examples/connect4/genomes/genome{0:02d}.p'.format(roll), 'rb'))
         except IOError:
             pass
-        if roll >= 10:
-            Connect4([None, ann]).play()
-        else:
+        if roll < 10:
             Connect4([ann, None]).play()
+        else:
+            Connect4([None, ann]).play()
     if players == 2:
         Connect4().play()
