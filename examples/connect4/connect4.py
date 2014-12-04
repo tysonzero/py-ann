@@ -7,8 +7,9 @@ from ann.ann import NeuralNetwork
 
 
 class Connect4(object):
-    def __init__(self):
+    def __init__(self, anns=[None, None]):
         self.pieces = [[] for i in xrange(7)]
+        self.anns = anns
         self.turn = 0
 
     def check(self, column):
@@ -41,6 +42,25 @@ class Connect4(object):
 
     def output(self):
         return [piece for piece_column in self.pieces for piece in piece_column + [1] + (6 - len(piece_column))*[0]]
+
+    def play(self, output=True):
+        winner = None
+        while winner is None:
+            if output:
+                print self
+            if self.anns[self.turn]:
+                winner = self.input(inputs=self.anns[self.turn].calculate(inputs=self.output()))
+            else:
+                winner = self.move(column=input('{0}\'s turn: '.format(self.turn and 'X' or 'O')))
+        if output:
+            print self
+        if winner == 2:
+            if output:
+                print "It's a tie!"
+        else:
+            if output:
+                print "{0} wins!".format(winner and 'X' or 'O')
+        return winner
 
     def __str__(self):
         output = ''
