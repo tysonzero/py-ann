@@ -95,22 +95,10 @@ def start():
                 for j in xrange(100):
                     scores.append(0)
                     for ann1 in anns[10:20]:
-                        connect4 = Connect4()
-                        winner = None
-                        while winner is None:
-                            if connect4.turn:
-                                winner = connect4.input(inputs=ann1.calculate(inputs=connect4.output()))
-                            else:
-                                winner = connect4.input(inputs=ann0.calculate(inputs=connect4.output(), increment=j/100.0))
-                        if output:
-                            print connect4
-                        if winner == 2:
-                            if output:
-                                print "It's a tie!"
-                        else:
+                        connect4 = Connect4([ann0, ann1])
+                        winner = connect4.play(output=output)
+                        if winner != 2:
                             scores[-1] += 1 - 2*winner
-                            if output:
-                                print "{0} wins!".format(winner and 'X' or 'O')
                 ann0.mutate(increment=scores.index(max(scores))/100.0)
                 dump(ann0.genome, open('examples/connect4/genomes/genome{0:02d}.p'.format(i), 'wb'))
             for i, ann1 in enumerate(anns[10:20]):
@@ -118,66 +106,22 @@ def start():
                 for j in xrange(100):
                     scores.append(0)
                     for ann0 in anns[0:10]:
-                        connect4 = Connect4()
-                        winner = None
-                        while winner is None:
-                            if connect4.turn:
-                                winner = connect4.input(inputs=ann1.calculate(inputs=connect4.output(), increment=j/100.0))
-                            else:
-                                winner = connect4.input(inputs=ann0.calculate(inputs=connect4.output()))
-                        if output:
-                            print connect4
-                        if winner == 2:
-                            if output:
-                                print "It's a tie!"
-                        else:
+                        connect4 = Connect4([ann0, ann1])
+                        winner = connect4.play(output=output)
+                        if winner != 2:
                             scores[-1] += 2*winner - 1
-                            if output:
-                                print "{0} wins!".format(winner and 'X' or 'O')
                 ann1.mutate(increment=scores.index(max(scores))/100.0)
                 dump(ann1.genome, open('examples/connect4/genomes/genome{0:02d}.p'.format(i + 10), 'wb'))
     if players == 1:
         roll = randint(0, 19)
-        connect4 = Connect4()
         ann = NeuralNetwork(inputs=49, outputs=3, hidden=49, rows=5)
         try:
             ann.genome = load(open('examples/connect4/genomes/genome{0:02d}.p'.format(roll), 'rb'))
         except IOError:
             pass
         if roll >= 10:
-            winner = None
-            while winner is None:
-                print connect4
-                if connect4.turn:
-                    winner = connect4.input(inputs=ann.calculate(inputs=connect4.output()))
-                else:
-                    winner = connect4.move(column=input('{0}\'s turn: '.format(connect4.turn and 'X' or 'O')))
-            print connect4
-            if winner == 2:
-                print "It's a tie!"
-            else:
-                print "{0} wins!".format(winner and 'X' or 'O')
+            Connect4([None, ann]).play()
         else:
-            winner = None
-            while winner is None:
-                print connect4
-                if connect4.turn:
-                    winner = connect4.move(column=input('{0}\'s turn: '.format(connect4.turn and 'X' or 'O')))
-                else:
-                    winner = connect4.input(inputs=ann.calculate(inputs=connect4.output()))
-            print connect4
-            if winner == 2:
-                print "It's a tie!"
-            else:
-                print "{0} wins!".format(winner and 'X' or 'O')
+            Connect4([ann, None]).play()
     if players == 2:
-        connect4 = Connect4()
-        winner = None
-        while winner is None:
-            print connect4
-            winner = connect4.move(column=input('{0}\'s turn: '.format(connect4.turn and 'X' or 'O')))
-        print connect4
-        if winner == 2:
-            print "It's a tie!"
-        else:
-            print "{0} wins!".format(winner and 'X' or 'O')
+        Connect4().play()
