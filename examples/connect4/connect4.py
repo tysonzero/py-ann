@@ -75,53 +75,54 @@ class Connect4(object):
         return output
 
 
-def start():
-    try:
-        mkdir('examples/connect4/genomes')
-    except OSError:
-        pass
-    players = input('Players: ')
-    if players == 0:
-        output = input('Output: ')
-        anns = [NeuralNetwork(inputs=49, outputs=3, hidden=49, rows=5) for i in xrange(20)]
-        for i, ann in enumerate(anns):
+class Connect4Network:
+    def start(self):
+        try:
+            mkdir('examples/connect4/genomes')
+        except OSError:
+            pass
+        players = input('Players: ')
+        if players == 0:
+            output = input('Output: ')
+            anns = [NeuralNetwork(inputs=49, outputs=3, hidden=49, rows=5) for i in xrange(20)]
+            for i, ann in enumerate(anns):
+                try:
+                    ann.genome = load(open('examples/connect4/genomes/genome{0:02d}.p'.format(i), 'rb'))
+                except IOError:
+                    pass
+            for _ in xrange(input('Iterations: ')):
+                for i, ann0 in enumerate(anns[0:10]):
+                    scores = []
+                    for j in xrange(100):
+                        scores.append(0)
+                        for ann1 in anns[10:20]:
+                            connect4 = Connect4([ann0, ann1])
+                            winner = connect4.play(output=output)
+                            if winner != 2:
+                                scores[-1] += 1 - 2*winner
+                    ann0.mutate(increment=scores.index(max(scores))/100.0)
+                    dump(ann0.genome, open('examples/connect4/genomes/genome{0:02d}.p'.format(i), 'wb'))
+                for i, ann1 in enumerate(anns[10:20]):
+                    scores = []
+                    for j in xrange(100):
+                        scores.append(0)
+                        for ann0 in anns[0:10]:
+                            connect4 = Connect4([ann0, ann1])
+                            winner = connect4.play(output=output)
+                            if winner != 2:
+                                scores[-1] += 2*winner - 1
+                    ann1.mutate(increment=scores.index(max(scores))/100.0)
+                    dump(ann1.genome, open('examples/connect4/genomes/genome{0:02d}.p'.format(i + 10), 'wb'))
+        if players == 1:
+            roll = randint(0, 19)
+            ann = NeuralNetwork(inputs=49, outputs=3, hidden=49, rows=5)
             try:
-                ann.genome = load(open('examples/connect4/genomes/genome{0:02d}.p'.format(i), 'rb'))
+                ann.genome = load(open('examples/connect4/genomes/genome{0:02d}.p'.format(roll), 'rb'))
             except IOError:
                 pass
-        for _ in xrange(input('Iterations: ')):
-            for i, ann0 in enumerate(anns[0:10]):
-                scores = []
-                for j in xrange(100):
-                    scores.append(0)
-                    for ann1 in anns[10:20]:
-                        connect4 = Connect4([ann0, ann1])
-                        winner = connect4.play(output=output)
-                        if winner != 2:
-                            scores[-1] += 1 - 2*winner
-                ann0.mutate(increment=scores.index(max(scores))/100.0)
-                dump(ann0.genome, open('examples/connect4/genomes/genome{0:02d}.p'.format(i), 'wb'))
-            for i, ann1 in enumerate(anns[10:20]):
-                scores = []
-                for j in xrange(100):
-                    scores.append(0)
-                    for ann0 in anns[0:10]:
-                        connect4 = Connect4([ann0, ann1])
-                        winner = connect4.play(output=output)
-                        if winner != 2:
-                            scores[-1] += 2*winner - 1
-                ann1.mutate(increment=scores.index(max(scores))/100.0)
-                dump(ann1.genome, open('examples/connect4/genomes/genome{0:02d}.p'.format(i + 10), 'wb'))
-    if players == 1:
-        roll = randint(0, 19)
-        ann = NeuralNetwork(inputs=49, outputs=3, hidden=49, rows=5)
-        try:
-            ann.genome = load(open('examples/connect4/genomes/genome{0:02d}.p'.format(roll), 'rb'))
-        except IOError:
-            pass
-        if roll < 10:
-            Connect4([ann, None]).play()
-        else:
-            Connect4([None, ann]).play()
-    if players == 2:
-        Connect4().play()
+            if roll < 10:
+                Connect4([ann, None]).play()
+            else:
+                Connect4([None, ann]).play()
+        if players == 2:
+            Connect4().play()
