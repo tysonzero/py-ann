@@ -95,7 +95,7 @@ class Connect4Network:
         ann.mutate(increment=scores.index(max(scores))/100.0)
         dump(ann.genome, open('examples/connect4/genomes/genome{0:02d}.p'.format(i), 'wb'))
 
-    def start(self):
+    def play(self):
         try:
             mkdir('examples/connect4/genomes')
         except OSError:
