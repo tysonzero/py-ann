@@ -1,3 +1,4 @@
+from multiprocessing import Process
 from os import mkdir
 from pickle import dump, load
 from random import randint
@@ -76,6 +77,24 @@ class Connect4(object):
 
 
 class Connect4Network:
+    def zero_players(self, ann, i, output):
+        anns = [NeuralNetwork(inputs=49, outputs=3, hidden=49, rows=5) for _ in xrange(10)]
+        for j, ann_opp in enumerate(anns):
+            try:
+                ann_opp.genome = load(open('examples/connect4/genomes/genome{0:02d}.p'.format(j + 10*(i < 10)), 'rb'))
+            except IOError:
+                pass
+        scores = []
+        for j in xrange(100):
+            scores.append(0)
+            for ann_opp in anns:
+                connect4 = Connect4(anns=i < 10 and [ann, ann_opp] or [ann_opp, ann])
+                winner = connect4.play(output=output)
+                if winner != 2:
+                    scores[-1] += 2*winner - 1
+        ann.mutate(increment=scores.index(max(scores))/100.0)
+        dump(ann.genome, open('examples/connect4/genomes/genome{0:02d}.p'.format(i), 'wb'))
+
     def start(self):
         try:
             mkdir('examples/connect4/genomes')
@@ -91,28 +110,8 @@ class Connect4Network:
                 except IOError:
                     pass
             for _ in xrange(input('Iterations: ')):
-                for i, ann0 in enumerate(anns[0:10]):
-                    scores = []
-                    for j in xrange(100):
-                        scores.append(0)
-                        for ann1 in anns[10:20]:
-                            connect4 = Connect4([ann0, ann1])
-                            winner = connect4.play(output=output)
-                            if winner != 2:
-                                scores[-1] += 1 - 2*winner
-                    ann0.mutate(increment=scores.index(max(scores))/100.0)
-                    dump(ann0.genome, open('examples/connect4/genomes/genome{0:02d}.p'.format(i), 'wb'))
-                for i, ann1 in enumerate(anns[10:20]):
-                    scores = []
-                    for j in xrange(100):
-                        scores.append(0)
-                        for ann0 in anns[0:10]:
-                            connect4 = Connect4([ann0, ann1])
-                            winner = connect4.play(output=output)
-                            if winner != 2:
-                                scores[-1] += 2*winner - 1
-                    ann1.mutate(increment=scores.index(max(scores))/100.0)
-                    dump(ann1.genome, open('examples/connect4/genomes/genome{0:02d}.p'.format(i + 10), 'wb'))
+                for i, ann in enumerate(anns):
+                    Process(target=self.zero_players, kwargs={'ann': ann, 'i': i, 'output': output}).start()
         if players == 1:
             roll = randint(0, 19)
             ann = NeuralNetwork(inputs=49, outputs=3, hidden=49, rows=5)
