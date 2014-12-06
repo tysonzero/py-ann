@@ -89,7 +89,7 @@ class Connect4Network:
         for j in xrange(100):
             scores.append(0)
             for ann_opp in anns:
-                connect4 = Connect4(anns=i < 10 and [ann, ann_opp] or [ann_opp, ann])
+                connect4 = Connect4(anns=i < 10 and [ann, ann_opp] or [ann_opp, ann], increments=i < 10 and [j/100.0, 0] or [0, j/100.0])
                 winner = connect4.play(output=output)
                 if winner != 2:
                     scores[-1] += 2*winner - 1
