@@ -8,9 +8,10 @@ from ann.ann import NeuralNetwork
 
 
 class Connect4(object):
-    def __init__(self, anns=[None, None]):
+    def __init__(self, anns=[None, None], increments=[0, 0]):
         self.pieces = [[] for i in xrange(7)]
         self.anns = anns
+        self.increments = increments
         self.turn = 0
 
     def check(self, column):
@@ -50,7 +51,7 @@ class Connect4(object):
             if output:
                 print self
             if self.anns[self.turn]:
-                winner = self.input(inputs=self.anns[self.turn].calculate(inputs=self.output()))
+                winner = self.input(inputs=self.anns[self.turn].calculate(inputs=self.output(), increment=self.increments[self.turn]))
             else:
                 winner = self.move(column=input('{0}\'s turn: '.format(self.turn and 'X' or 'O')))
         if output:
