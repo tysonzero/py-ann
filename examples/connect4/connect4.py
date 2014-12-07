@@ -30,7 +30,7 @@ class Connect4(object):
                 if row[j] == row[j + 1] == row[j + 2] == row[j + 3] is not None:
                     return row[j]
         if sum(len(piece_column) for piece_column in self.pieces) == 42:
-            return 2
+            return 0.5
 
     def move(self, column):
         for i in xrange(column, column + 7):
@@ -56,7 +56,7 @@ class Connect4(object):
                 winner = self.move(column=input('{0}\'s turn: '.format(self.turn and 'X' or 'O')))
         if output:
             print self
-        if winner == 2:
+        if winner == 0.5:
             if output:
                 print "It's a tie!"
         else:
@@ -91,8 +91,7 @@ class Connect4Network:
             for ann_opp in anns:
                 connect4 = Connect4(anns=i < 10 and [ann, ann_opp] or [ann_opp, ann], increments=i < 10 and [j/100.0, 0] or [0, j/100.0])
                 winner = connect4.play(output=output)
-                if winner != 2:
-                    scores[-1] += i < 10 and 1 - 2*winner or 2*winner - 1
+                scores[-1] += i < 10 and 1 - 2*winner or 2*winner - 1
         ann.mutate(increment=scores.index(max(scores))/100.0)
         dump(ann.genome, open('examples/connect4/genomes/genome{0:02d}.p'.format(i), 'wb'))
 
