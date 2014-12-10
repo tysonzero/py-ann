@@ -32,7 +32,7 @@ class NeuralNetwork(object):
         self.bias = Neuron()
         self.neurons = [[Neuron(parents=[]) for input_ in xrange(inputs)]]
         for row in xrange(rows - 2):
-            self.neurons.append([Neuron(parents=self.neurons[-1] + [self.bias]) for output in xrange(outputs)])
+            self.neurons.append([Neuron(parents=self.neurons[-1] + [self.bias]) for output in xrange(hidden)])
         self.neurons.append([Neuron(parents=self.neurons[-1] + [self.bias]) for output in xrange(outputs)])
         self.bias.output = True
 
