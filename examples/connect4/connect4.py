@@ -78,18 +78,18 @@ class Connect4(object):
 
 
 class Connect4Network:
-    def zero_players(self, ann, i, output):
-        anns = [NeuralNetwork(inputs=49, outputs=3, hidden=49, rows=5) for _ in xrange(10)]
-        for j, ann_opp in enumerate(anns):
+    def zero_players(self, i, output):
+        anns = [NeuralNetwork(inputs=49, outputs=3, hidden=49, rows=5) for _ in xrange(20)]
+        for j, ann in enumerate(anns):
             try:
-                ann_opp.genome = load(open('examples/connect4/genomes/genome{0:02d}.p'.format(j + 10*(i < 10)), 'rb'))
+                ann.genome = load(open('examples/connect4/genomes/genome{0:02d}.p'.format(j), 'rb'))
             except IOError:
                 pass
         scores = []
         for j in xrange(100):
             scores.append(0)
-            for ann_opp in anns:
-                connect4 = Connect4(anns=i < 10 and [ann, ann_opp] or [ann_opp, ann], increments=i < 10 and [j/100.0, 0] or [0, j/100.0])
+            for ann in i < 10 and anns[10:20] or anns[0:10]:
+                connect4 = Connect4(anns=i < 10 and [anns[i], ann] or [ann, anns[i]], increments=i < 10 and [j/100.0, 0] or [0, j/100.0])
                 winner = connect4.play(output=output)
                 scores[-1] += i < 10 and 1 - 2*winner or 2*winner - 1
         ann.mutate(increment=scores.index(max(scores))/100.0)
@@ -112,7 +112,7 @@ class Connect4Network:
             for _ in xrange(input('Iterations: ')):
                 processes = []
                 for i, ann in enumerate(anns):
-                    processes.append(Process(target=self.zero_players, kwargs={'ann': ann, 'i': i, 'output': output}))
+                    processes.append(Process(target=self.zero_players, kwargs={'i': i, 'output': output}))
                     processes[-1].start()
                 for process in processes:
                     process.join()
