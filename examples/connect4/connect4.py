@@ -103,15 +103,9 @@ class Connect4Network:
         players = input('Players: ')
         if players == 0:
             output = input('Output: ')
-            anns = [NeuralNetwork(inputs=49, outputs=3, hidden=49, rows=5) for i in xrange(20)]
-            for i, ann in enumerate(anns):
-                try:
-                    ann.genome = load(open('examples/connect4/genomes/genome{0:02d}.p'.format(i), 'rb'))
-                except IOError:
-                    pass
             for _ in xrange(input('Iterations: ')):
                 processes = []
-                for i, ann in enumerate(anns):
+                for i in xrange(20):
                     processes.append(Process(target=self.zero_players, kwargs={'i': i, 'output': output}))
                     processes[-1].start()
                 for process in processes:
