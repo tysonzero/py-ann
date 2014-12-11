@@ -88,10 +88,16 @@ class Connect4Network:
         scores = []
         for j in xrange(100):
             scores.append(0)
-            for ann in i < 10 and anns[10:20] or anns[0:10]:
-                connect4 = Connect4(anns=i < 10 and [anns[i], ann] or [ann, anns[i]], increments=i < 10 and [j/100.0, 0] or [0, j/100.0])
-                winner = connect4.play(output=output)
-                scores[-1] += i < 10 and 1 - 2*winner or 2*winner - 1
+            if i < 10:
+                for ann in anns[10:20]:
+                    connect4 = Connect4(anns=[anns[i], ann], increments=[j/100.0, 0])
+                    winner = connect4.play(output=output)
+                    scores[-1] += 1 - 2*winner
+            else:
+                for ann in anns[0:10]:
+                    connect4 = Connect4(anns=[ann, anns[i]], increments=[0, j/100.0])
+                    winner = connect4.play(output=output)
+                    scores[-1] += 2*winner - 1
         ann.mutate(increment=scores.index(max(scores))/100.0)
         dump(ann.genome, open('examples/connect4/genomes/genome{0:02d}.p'.format(i), 'wb'))
 
