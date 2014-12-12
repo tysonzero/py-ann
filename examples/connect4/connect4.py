@@ -53,7 +53,7 @@ class Connect4(object):
             if self.anns[self.turn]:
                 winner = self.input(inputs=self.anns[self.turn].calculate(inputs=self.output(), increment=self.increments[self.turn]))
             else:
-                winner = self.move(column=input('{0}\'s turn: '.format(self.turn and 'X' or 'O')))
+                winner = self.move(column=input('{0}\'s turn: '.format('X' if self.turn else 'O')))
         if output:
             print self
         if winner == 0.5:
@@ -61,16 +61,16 @@ class Connect4(object):
                 print "It's a tie!"
         else:
             if output:
-                print "{0} wins!".format(winner and 'X' or 'O')
+                print "{0} wins!".format('X' if winner else 'O')
         return winner
 
     def __str__(self):
         output = ''
         for i in xrange(6):
-            output += i and '\n|' or '|'
+            output += '\n|' if i else '|'
             for piece_column in self.pieces:
                 try:
-                    output += piece_column[5 - i] and 'X|' or 'O|'
+                    output += 'X|' if piece_column[5 - i] else 'O|'
                 except IndexError:
                     output += ' |'
         output += '\n 0 1 2 3 4 5 6 '
