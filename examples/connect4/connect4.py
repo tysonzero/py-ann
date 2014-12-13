@@ -27,7 +27,7 @@ class Connect4(object):
                 except IndexError:
                     row.append(None)
             for j in xrange(4):
-                if row[j] == row[j + 1] == row[j + 2] == row[j + 3] is not None:
+                if row[j] == row[j + 1] == row[j + 2] == row[j + 3]:
                     return row[j]
         if sum(len(piece_column) for piece_column in self.pieces) == 42:
             return 0.5
