@@ -78,7 +78,7 @@ class Connect4(object):
 
 
 class Connect4Network:
-    def zero_players(self, i, output):
+    def thread(self, i, output):
         anns = [NeuralNetwork(inputs=49, outputs=3, hidden=49, rows=5) for _ in xrange(20)]
         for j, ann in enumerate(anns):
             try:
@@ -112,7 +112,7 @@ class Connect4Network:
             for _ in xrange(input('Iterations: ')):
                 processes = []
                 for i in xrange(20):
-                    processes.append(Process(target=self.zero_players, kwargs={'i': i, 'output': output}))
+                    processes.append(Process(target=self.thread, kwargs={'i': i, 'output': output}))
                     processes[-1].start()
                 for process in processes:
                     process.join()
