@@ -116,7 +116,7 @@ class Connect4Network:
                     processes[-1].start()
                 for process in processes:
                     process.join()
-        if players == 1:
+        elif players == 1:
             roll = randint(0, 19)
             ann = NeuralNetwork(inputs=49, outputs=3, hidden=49, rows=5)
             try:
@@ -127,5 +127,5 @@ class Connect4Network:
                 Connect4([ann, None]).play()
             else:
                 Connect4([None, ann]).play()
-        if players == 2:
+        elif players == 2:
             Connect4().play()
