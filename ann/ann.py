@@ -39,10 +39,10 @@ class NeuralNetwork(object):
     def calculate(self, inputs, increment=0):
         for i, neuron_row in enumerate(self.neurons):
             for j, neuron in enumerate(neuron_row):
-                if i == 0:
-                    neuron.output = inputs[j]
-                else:
+                if i:
                     neuron.calculate(increment=increment)
+                else:
+                    neuron.output = inputs[j]
         return [neuron.output for neuron in self.neurons[-1]]
 
     def mutate(self, increment):
