@@ -14,5 +14,5 @@ class TicTacToe(object):
         output = ''
         for i, piece in enumerate(self.pieces):
             output += '' if not i else '\n' if not i % 3 else ' '
-            output += 'X' if piece else 'O' if piece is not None else str(i)
+            output += 'O' if piece else 'X' if piece is not None else str(i)
         return output
