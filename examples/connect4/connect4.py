@@ -9,7 +9,7 @@ from ann.ann import NeuralNetwork
 
 class Connect4(object):
     def __init__(self, anns=[None, None], increments=[0, 0]):
-        self.pieces = [[] for i in xrange(7)]
+        self.pieces = [[] for _ in xrange(7)]
         self.anns = anns
         self.increments = increments
         self.turn = 0
