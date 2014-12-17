@@ -77,7 +77,7 @@ class Connect4(object):
         return output
 
 
-class Connect4Network:
+class Connect4Network(object):
     def thread(self, i, output):
         anns = [NeuralNetwork(inputs=49, outputs=3, hidden=49, rows=5) for _ in xrange(20)]
         for j, ann in enumerate(anns):
