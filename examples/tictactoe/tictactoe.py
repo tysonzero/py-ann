@@ -7,3 +7,5 @@ class TicTacToe(object):
         for i in xrange(position, position + 9):
             if self.pieces[i % 9] is None:
                 self.pieces[i % 9] = self.turn
+                self.turn = 1 - self.turn
+                return
