@@ -13,6 +13,9 @@ class TicTacToe(object):
     def input(self, inputs):
         return self.move(sum(j*2**i for i, j in enumerate(inputs)))
 
+    def output(self):
+        return [piece is not None for piece in self.pieces] + [bool(piece) for piece in self.pieces]
+
     def __str__(self):
         output = ''
         for i, piece in enumerate(self.pieces):
