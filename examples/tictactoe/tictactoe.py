@@ -10,6 +10,9 @@ class TicTacToe(object):
                 self.turn = 1 - self.turn
                 return
 
+    def input(self, inputs):
+        return self.move(sum(j*2**i for i, j in enumerate(inputs)))
+
     def __str__(self):
         output = ''
         for i, piece in enumerate(self.pieces):
