@@ -22,7 +22,7 @@ class TicTacToe(object):
             if self.pieces[i % 9] is None:
                 self.pieces[i % 9] = self.turn
                 self.turn = 1 - self.turn
-                return
+                return self.check(i % 9)
 
     def input(self, inputs):
         return self.move(sum(j*2**i for i, j in enumerate(inputs)))
