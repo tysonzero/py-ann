@@ -1,6 +1,8 @@
 class TicTacToe(object):
-    def __init__(self):
+    def __init__(self, anns=[None, None], increments=[0, 0]):
         self.pieces = [None for _ in xrange(9)]
+        self.anns = anns
+        self.increments = increments
         self.turn = 0
 
     def check(self, position):
