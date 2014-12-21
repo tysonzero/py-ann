@@ -32,6 +32,25 @@ class TicTacToe(object):
     def output(self):
         return [piece is not None for piece in self.pieces] + [bool(piece) for piece in self.pieces]
 
+    def play(self, output=True):
+        winner = None
+        while winner is None:
+            if output:
+                print self
+            if self.anns[self.turn]:
+                winner = self.input(inputs=self.anns[self.turn].calculate(inputs=self.output(), increment=self.increments[self.turn]))
+            else:
+                winner = self.move(position=input('{0}\'s turn: '.format('O' if self.turn else 'X')))
+        if output:
+            print self
+        if winner == 0.5:
+            if output:
+                print "It's a tie!"
+        else:
+            if output:
+                print "{0} wins!".format('O' if winner else 'X')
+        return winner
+
     def __str__(self):
         output = ''
         for i, piece in enumerate(self.pieces):
