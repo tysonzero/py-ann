@@ -57,3 +57,7 @@ class TicTacToe(object):
             output += '' if not i else '\n' if not i % 3 else ' '
             output += 'O' if piece else 'X' if piece is not None else str(i)
         return output
+
+
+class TicTacToeNetwork(object):
+    pass
