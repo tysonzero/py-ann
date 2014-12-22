@@ -1,3 +1,4 @@
 *.py[co]
 
 examples/connect4/genomes/
+examples/tictactoe/genomes/
