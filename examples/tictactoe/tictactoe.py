@@ -1,4 +1,7 @@
+from multiprocessing import Process
+from os import mkdir
 from pickle import dump, load
+from random import randint
 
 
 from ann.ann import NeuralNetwork
@@ -88,3 +91,32 @@ class TicTacToeNetwork(object):
                     scores[-1] += 2*winner - 1
         ann.mutate(increment=scores.index(max(scores))/100.0)
         dump(ann.genome, open('examples/tictactoe/genomes/genome{0:02d}.p'.format(i), 'wb'))
+
+    def play(self):
+        try:
+            mkdir('examples/tictactoe/genomes')
+        except OSError:
+            pass
+        players = input('Players: ')
+        if players == 0:
+            output = input('Output: ')
+            for _ in xrange(input('Iterations: ')):
+                processes = []
+                for i in xrange(20):
+                    processes.append(Process(target=self.thread, kwargs={'i': i, 'output': output}))
+                    processes[-1].start()
+                for process in processes:
+                    process.join()
+        elif players == 1:
+            roll = randint(0, 19)
+            ann = NeuralNetwork(inputs=18, outputs=4, hidden=18, rows=4)
+            try:
+                ann.genome = load(open('examples/tictactoe/genomes/genome{0:02d}.p'.format(roll), 'rb'))
+            except IOError:
+                pass
+            if roll < 10:
+                TicTacToe([ann, None]).play()
+            else:
+                TicTacToe([None, ann]).play()
+        elif players == 2:
+            TicTacToe().play()
