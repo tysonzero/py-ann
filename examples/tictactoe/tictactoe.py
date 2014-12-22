@@ -1,3 +1,9 @@
+from pickle import dump, load
+
+
+from ann.ann import NeuralNetwork
+
+
 class TicTacToe(object):
     def __init__(self, anns=[None, None], increments=[0, 0]):
         self.pieces = [None for _ in xrange(9)]
@@ -60,4 +66,25 @@ class TicTacToe(object):
 
 
 class TicTacToeNetwork(object):
-    pass
+    def thread(self, i, output):
+        anns = [NeuralNetwork(inputs=18, outputs=4, hidden=18, rows=4) for _ in xrange(20)]
+        for j, ann in enumerate(anns):
+            try:
+                ann.genome = load(open('examples/tictactoe/genomes/genome{0:02d}.p'.format(j), 'rb'))
+            except IOError:
+                pass
+        scores = []
+        for j in xrange(100):
+            scores.append(0)
+            if i < 10:
+                for ann in anns[10:20]:
+                    tictactoe = TicTacToe(anns=[anns[i], ann], increments=[j/100.0, 0])
+                    winner = tictactoe.play(output=output)
+                    scores[-1] += 1 - 2*winner
+            else:
+                for ann in anns[0:10]:
+                    tictactoe = TicTacToe(anns=[ann, anns[i]], increments=[0, j/100.0])
+                    winner = tictactoe.play(output=output)
+                    scores[-1] += 2*winner - 1
+        ann.mutate(increment=scores.index(max(scores))/100.0)
+        dump(ann.genome, open('examples/tictactoe/genomes/genome{0:02d}.p'.format(i), 'wb'))
