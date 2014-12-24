@@ -64,7 +64,7 @@ class TicTacToe(object):
         output = ''
         for i, piece in enumerate(self.pieces):
             output += '' if not i else '\n' if not i % 3 else ' '
-            output += 'O' if piece else 'X' if piece is not None else str(i)
+            output += '\033[92mO\033[0m' if piece else '\033[91mX\033[0m' if piece is not None else str(i)
         return output
 
 
