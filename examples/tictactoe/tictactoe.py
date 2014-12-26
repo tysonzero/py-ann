@@ -3,7 +3,6 @@ from os import mkdir
 from pickle import dump, load
 from random import randint
 
-
 from ann.ann import NeuralNetwork
 
 
