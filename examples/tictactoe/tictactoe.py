@@ -3,7 +3,7 @@ from os import mkdir
 from pickle import dump, load
 from random import randint
 
-from ann.ann import NeuralNetwork
+from ann.ann import ANN
 
 
 class TicTacToe(object):
@@ -69,7 +69,7 @@ class TicTacToe(object):
 
 class TicTacToeNetwork(object):
     def thread(self, i, output):
-        anns = [NeuralNetwork(inputs=18, outputs=4, hidden=18, rows=4) for _ in xrange(20)]
+        anns = [ANN(inputs=18, outputs=4, hidden=18, rows=4) for _ in xrange(20)]
         for j, ann in enumerate(anns):
             try:
                 ann.genome = load(open('examples/tictactoe/genomes/genome{0:02d}.p'.format(j), 'rb'))
@@ -108,7 +108,7 @@ class TicTacToeNetwork(object):
                     process.join()
         elif players == 1:
             roll = randint(0, 19)
-            ann = NeuralNetwork(inputs=18, outputs=4, hidden=18, rows=4)
+            ann = ANN(inputs=18, outputs=4, hidden=18, rows=4)
             try:
                 ann.genome = load(open('examples/tictactoe/genomes/genome{0:02d}.p'.format(roll), 'rb'))
             except IOError:

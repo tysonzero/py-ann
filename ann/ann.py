@@ -27,7 +27,7 @@ class Neuron(object):
     genome = property(get_genome, set_genome)
 
 
-class NeuralNetwork(object):
+class ANN(object):
     def __init__(self, inputs, outputs, hidden, rows):
         self.bias = Neuron()
         self.neurons = [[Neuron() for input_ in xrange(inputs)]]

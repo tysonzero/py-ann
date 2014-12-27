@@ -3,7 +3,7 @@ from os import mkdir
 from pickle import dump, load
 from random import randint
 
-from ann.ann import NeuralNetwork
+from ann.ann import ANN
 
 
 class Connect4(object):
@@ -77,8 +77,8 @@ class Connect4(object):
 
 
 class Connect4Network(object):
-    def thread(self, i, output):
-        anns = [NeuralNetwork(inputs=49, outputs=3, hidden=49, rows=5) for _ in xrange(20)]
+    def thread(self, i):
+        anns = [ANN(inputs=49, outputs=3, hidden=49, rows=5) for _ in xrange(20)]
         for j, ann in enumerate(anns):
             try:
                 ann.genome = load(open('examples/connect4/genomes/genome{0:02d}.p'.format(j), 'rb'))
@@ -117,7 +117,7 @@ class Connect4Network(object):
                     process.join()
         elif players == 1:
             roll = randint(0, 19)
-            ann = NeuralNetwork(inputs=49, outputs=3, hidden=49, rows=5)
+            ann = ANN(inputs=49, outputs=3, hidden=49, rows=5)
             try:
                 ann.genome = load(open('examples/connect4/genomes/genome{0:02d}.p'.format(roll), 'rb'))
             except IOError:
