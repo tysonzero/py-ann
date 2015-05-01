@@ -2,12 +2,12 @@ from random import uniform
 
 
 class Neuron(object):
-    def __init__(self, parents=[]):
+    def __init__(self, parents=None):
         self.parents = [{
             'neuron': parent,
             'weight': uniform(-1, 1),
             'slope': uniform(-1, 1),
-        } for parent in parents]
+        } for parent in parents or []]
 
     def calculate(self, increment):
         self.output = sum(parent['neuron'].output*(parent['weight'] + increment*parent['slope']) for parent in self.parents) > 0

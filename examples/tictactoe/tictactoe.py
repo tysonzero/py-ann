@@ -7,10 +7,10 @@ from ann.ann import ANN
 
 
 class TicTacToe(object):
-    def __init__(self, anns=[None, None], increments=[0, 0]):
+    def __init__(self, anns=None, increments=None):
         self.pieces = [None for _ in xrange(9)]
-        self.anns = anns
-        self.increments = increments
+        self.anns = anns or [None, None]
+        self.increments = increments or [0, 0]
         self.turn = 0
 
     def check(self, position):
