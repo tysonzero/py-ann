@@ -24,7 +24,7 @@ class TicTacToe(object):
         if position == 4 or position % 4 == 2:
             if len(set(self.pieces[2::2][0:3])) == 1:
                 return self.pieces[position]
-        if set(self.pieces) == set([0, 1]):
+        if set(self.pieces) == {0, 1}:
             return 0.5
 
     def move(self, position):
