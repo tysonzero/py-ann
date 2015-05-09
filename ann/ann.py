@@ -20,9 +20,9 @@ class Neuron(object):
     def get_genome(self):
         return [parent['weight'] for parent in self.parents]
 
-    def set_genome(self, value):
+    def set_genome(self, genome):
         for i, parent in enumerate(self.parents):
-            parent['weight'] = value[i]
+            parent['weight'] = genome[i]
 
     genome = property(get_genome, set_genome)
 
@@ -53,9 +53,9 @@ class ANN(object):
     def get_genome(self):
         return [[neuron.genome for neuron in neuron_row] for neuron_row in self.neurons[1:]]
 
-    def set_genome(self, value):
+    def set_genome(self, genome):
         for i, neuron_row in enumerate(self.neurons[1:]):
             for j, neuron in enumerate(neuron_row):
-                neuron.genome = value[i][j]
+                neuron.genome = genome[i][j]
 
     genome = property(get_genome, set_genome)
