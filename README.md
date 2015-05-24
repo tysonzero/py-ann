@@ -8,8 +8,8 @@ Instructions
 
 Examples:
 
-    ./run.py connect4
-    ./run.py tictactoe
+    python run.py connect4
+    python run.py tictactoe
 
 To use it yourself:
 
