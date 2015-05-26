@@ -3,15 +3,14 @@ ANN
 
 An Artificial Neural Network
 
-Instructions
-------------
-
 Examples:
+---------
 
     python run.py connect4
     python run.py tictactoe
 
 To use it yourself:
+-------------------
 
     from ann.ann import ANN
     ann = ANN(inputs=4, outputs=4, hidden=4, rows=4)
