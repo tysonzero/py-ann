@@ -52,7 +52,7 @@ class Connect4(object):
             if self.anns[self.turn]:
                 winner = self.input(inputs=self.anns[self.turn].calculate(inputs=self.output(), increment=self.increments[self.turn]))
             else:
-                winner = self.move(column=input('{0}\'s turn: '.format('X' if self.turn else 'O')))
+                winner = self.move(column=input("{0}'s turn: ".format('X' if self.turn else 'O')))
         if output:
             print self
         if winner == 0.5:

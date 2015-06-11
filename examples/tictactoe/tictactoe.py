@@ -48,7 +48,7 @@ class TicTacToe(object):
             if self.anns[self.turn]:
                 winner = self.input(inputs=self.anns[self.turn].calculate(inputs=self.output(), increment=self.increments[self.turn]))
             else:
-                winner = self.move(position=input('{0}\'s turn: '.format('O' if self.turn else 'X')))
+                winner = self.move(position=input("{0}'s turn: ".format('O' if self.turn else 'X')))
         if output:
             print self
         if winner == 0.5:
